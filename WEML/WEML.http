@@ -1,0 +1,62 @@
+﻿@WEML_HostAddress = https://localhost:7176
+
+GET {{WEML_HostAddress}}/account/index/{id}
+
+###
+
+GET {{WEML_HostAddress}}/account/login/{id}
+
+###
+
+POST {{WEML_HostAddress}}/account/login/{id}?email=string&password=string&rememberMe=False
+
+###
+
+POST {{WEML_HostAddress}}/account/logout/{id}
+
+###
+
+GET {{WEML_HostAddress}}/home/error/{id}
+
+###
+
+GET {{WEML_HostAddress}}/home/index/{id}
+
+###
+
+GET {{WEML_HostAddress}}/home/privacy/{id}
+
+###
+
+GET {{WEML_HostAddress}}/account/login/{id}
+
+###
+
+POST {{WEML_HostAddress}}/account/login/{id}?email=string&password=string&rememberMe=False
+
+###
+
+POST {{WEML_HostAddress}}/account/logout/{id}
+
+###
+
+GET {{WEML_HostAddress}}/home/error/{id}
+
+###
+
+GET {{WEML_HostAddress}}/home/index/{id}
+
+###
+
+GET {{WEML_HostAddress}}/home/privacy/{id}
+
+###
+
+POST {{WEML_HostAddress}}/account/login/{id}
+Content-Type: application/json
+
+{
+  //LoginViewModel
+}
+
+###
