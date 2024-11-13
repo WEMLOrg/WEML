@@ -1,16 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WEML.Models;
+using WEML.Repos;
 
 namespace WEML.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private SymptomsRepo _symptomsRepo;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SymptomsRepo symptomsRepo)
         {
             _logger = logger;
+            _symptomsRepo = symptomsRepo;
         }
 
         public IActionResult Index()
@@ -40,8 +43,22 @@ namespace WEML.Controllers
         }
         
         [HttpPost]
-        public IActionResult SubmitSymptom(string SymptomName, string SymptomDescription, string Severity)
+        public async Task<IActionResult> SubmitSymptom(string SymptomName, string SymptomDescription, string Severity)
         {
+            if (string.IsNullOrEmpty(SymptomName) || string.IsNullOrEmpty(SymptomDescription) || string.IsNullOrEmpty(Severity))
+            {
+                TempData["Message"] = "All fields are required.";
+                return RedirectToAction("Index");
+            }
+
+            Symptom newSymtom = new Symptom
+            {
+                SymptomName = SymptomName,
+                Severity = Severity,
+                SymptomDescription = SymptomDescription,
+                SymptomId = new Guid()
+            };
+            await _symptomsRepo.AddSymptomAsync(newSymtom);
             TempData["Message"] = "Symptom submitted successfully!";
             return RedirectToAction("Index");
         }
