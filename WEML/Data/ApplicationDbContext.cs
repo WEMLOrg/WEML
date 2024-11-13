@@ -12,6 +12,8 @@ namespace WEML.Data
         {
            
         }
+        public DbSet<Symptom> Symptoms { get; set; }
+        public DbSet<Feeling> Feelings { get; set; }
        // public DbSet<User> Users {  get; set; }
     }
 }
