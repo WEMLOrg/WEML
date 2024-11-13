@@ -9,11 +9,13 @@ namespace WEML.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private SymptomsRepo _symptomsRepo;
+        private FeelingsRepo _feelingsRepo;
 
-        public HomeController(ILogger<HomeController> logger, SymptomsRepo symptomsRepo)
+        public HomeController(ILogger<HomeController> logger, SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo)
         {
             _logger = logger;
             _symptomsRepo = symptomsRepo;
+            _feelingsRepo = feelingsRepo;
         }
 
         public IActionResult Index()
@@ -64,8 +66,24 @@ namespace WEML.Controllers
         }
         
         [HttpPost]
-        public IActionResult SubmitFeeling(string FeelingName, string FeelingDescription, string FeelingSeverity)
+        public async Task<IActionResult> SubmitFeeling(string FeelingName, string FeelingDescription, string FeelingSeverity)
         {
+            if (string.IsNullOrEmpty(FeelingName) || string.IsNullOrEmpty(FeelingDescription) || string.IsNullOrEmpty(FeelingSeverity))
+            {
+                TempData["Message"] = "All fields are required.";
+                return RedirectToAction("Index");
+            }
+
+            Feeling newFeeling = new Feeling
+            {
+                FeelingName = FeelingName,
+                FeelingDescription = FeelingDescription,
+                FeelingId = new Guid(),
+                FeelingSeverity = FeelingSeverity
+            };
+            
+            await _feelingsRepo.AddFeelingAsync(newFeeling);
+            
             TempData["Message"] = "Feeling submitted successfully!";
             return RedirectToAction("Index");
         }

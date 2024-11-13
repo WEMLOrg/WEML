@@ -19,6 +19,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.AddScoped<SymptomsRepo>();
+builder.Services.AddScoped<FeelingsRepo>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
