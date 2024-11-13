@@ -9,6 +9,7 @@
 .idea/modules.xml
 .idea/workspace.xml
 *.sln.iml
+.obj/
 # Rider, ReSharper, DotCover, and Code Cleanup settings
 _ReSharper*/
 *.DotSettings.user
