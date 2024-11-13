@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Symptoms Form";
+}
+
+<h2>Symptoms Form</h2>
+
+<form asp-action="SubmitSymptom" asp-controller="Home" method="post">
+    <div class="form-group">
+        <label for="SymptomName">Symptom Name</label>
+        <input type="text" class="form-control" id="SymptomName" name="SymptomName" placeholder="Enter symptom name" required>
+    </div>
+    <div class="form-group">
+        <label for="SymptomDescription">Description</label>
+        <textarea class="form-control" id="SymptomDescription" name="SymptomDescription" rows="4" placeholder="Describe your symptom" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="Severity">Severity</label>
+        <select class="form-control" id="Severity" name="Severity">
+            <option>Mild</option>
+            <option>Moderate</option>
+            <option>Severe</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Symptom</button>
+</form>

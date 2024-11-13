@@ -28,5 +28,31 @@ namespace WEML.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
+        public IActionResult SymptomsForm()
+        {
+            return View();
+        }
+
+        public IActionResult FeelingsForm()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult SubmitSymptom(string SymptomName, string SymptomDescription, string Severity)
+        {
+            TempData["Message"] = "Symptom submitted successfully!";
+            return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        public IActionResult SubmitFeeling(string FeelingName, string FeelingDescription, string FeelingSeverity)
+        {
+            TempData["Message"] = "Feeling submitted successfully!";
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
