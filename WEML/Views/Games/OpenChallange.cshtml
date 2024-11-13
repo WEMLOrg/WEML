@@ -1,0 +1,43 @@
+﻿@model IEnumerable<WEML.Models.Question>
+
+@{
+    ViewData["Title"] = "Games";
+}
+
+<div>
+    <h1>Best of luck! </h1>
+</div>
+
+<form method="post" asp-action="SubmitAnswers">
+    @Html.AntiForgeryToken()
+    <div class="container">
+        @foreach (var question in Model)
+        {
+            <div class="mb-4">
+                <h2>@Html.DisplayFor(modelItem => question.question)</h2>
+                @{
+                    var answers = new List<string>
+            {
+            question.correctAnswer,
+            question.incorrectAnswer1,
+            question.incorrectAnswer2 ?? string.Empty,
+            question.incorrectAnswer3 ?? string.Empty
+            }
+                    .Where(a => !string.IsNullOrEmpty(a))
+                    .OrderBy(a => Guid.NewGuid())
+                    .ToList(); 
+                }
+
+                @foreach (var ans in answers)
+                    {
+                    <div class="form-check">
+                        <h3><input class="form-check-input" type="radio" name="selectedAnswers[@question.qId]" value="@ans" id="@ans-@question.qId" /></h3>
+                        <label class="form-check-label" for="@ans-@question.qId">@ans</label>
+                    </div>
+                    }
+            </div>
+        }
+
+        <button type="submit" class="btn btn-primary">Submit Answers</button>
+    </div>
+</form>
