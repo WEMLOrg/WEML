@@ -25,6 +25,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+                        <li>
+                            @Html.ActionLink("Games", "GetAllChallanges", "Games", null, new { @class = "nav-link" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Statistics", "GetAllChallanges", "Games", null, new { @class = "nav-link" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Articles", "Index", "Articles", null, new { @class = "nav-link" })
+                        </li>
                         
                 </ul>
                 <partial name="_LoginPartial" />

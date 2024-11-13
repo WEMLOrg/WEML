@@ -155,6 +155,48 @@ namespace WEML.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WEML.Models.Challange", b =>
+                {
+                    b.Property<int>("cId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cId"));
+
+                    b.Property<int>("maxScore")
+                        .HasColumnType("int");
+
+                    b.Property<int>("minScoreToPass")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("objective")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("cId");
+
+                    b.ToTable("Challanges");
+                });
+
+            modelBuilder.Entity("WEML.Models.ChallangeQuestions", b =>
+                {
+                    b.Property<int>("cId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("questionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("cId", "questionId");
+
+                    b.HasIndex("questionId");
+
+                    b.ToTable("ChallangeQuestions");
+                });
+
             modelBuilder.Entity("WEML.Models.Feeling", b =>
                 {
                     b.Property<Guid>("FeelingId")
@@ -176,6 +218,40 @@ namespace WEML.Data.Migrations
                     b.HasKey("FeelingId");
 
                     b.ToTable("Feelings");
+                });
+
+            modelBuilder.Entity("WEML.Models.Question", b =>
+                {
+                    b.Property<int>("qId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("qId"));
+
+                    b.Property<string>("correctAnswer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("incorrectAnswer1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("incorrectAnswer2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("incorrectAnswer3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("points")
+                        .HasColumnType("int");
+
+                    b.Property<string>("question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("qId");
+
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("WEML.Models.Symptom", b =>
@@ -336,6 +412,35 @@ namespace WEML.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WEML.Models.ChallangeQuestions", b =>
+                {
+                    b.HasOne("WEML.Models.Challange", "Challange")
+                        .WithMany("ChallangeQuestions")
+                        .HasForeignKey("cId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WEML.Models.Question", "Question")
+                        .WithMany("ChallangeQuestions")
+                        .HasForeignKey("questionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Challange");
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("WEML.Models.Challange", b =>
+                {
+                    b.Navigation("ChallangeQuestions");
+                });
+
+            modelBuilder.Entity("WEML.Models.Question", b =>
+                {
+                    b.Navigation("ChallangeQuestions");
                 });
 #pragma warning restore 612, 618
         }

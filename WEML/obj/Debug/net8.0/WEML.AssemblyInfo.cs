@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WEML")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7925c682312a1abc85438046507300d81cbd5d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8032d9184583741e1eb5e9258138e7dc7285d873")]
 [assembly: System.Reflection.AssemblyProductAttribute("WEML")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WEML")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

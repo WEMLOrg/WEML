@@ -1,0 +1,27 @@
+﻿@model WEML.Models.Article
+
+@{
+    ViewData["Title"] = "Article Details";
+}
+
+<div class="container" style="padding: 20px; max-width: 800px;">
+
+    <h1 style="font-size: 36px; text-align: center;">@Html.DisplayFor(model => model.Title)</h1>
+
+    @if (!string.IsNullOrEmpty(Model.Image))
+    {
+        <div class="text-center">
+            <img src="@Model.Image" alt="Article Image" style="max-width: 100%; height: auto; border-radius: 8px;" />
+        </div>
+    }
+
+    <div style="font-size: 18px; line-height: 1.6;">
+        <p>@Html.DisplayFor(model => model.Body)</p>
+    </div>
+
+    <hr style="border-top: 2px solid #3f7cac; margin-top: 30px;" />
+
+    <div class="text-center">
+        <a asp-action="Index" class="btn btn-primary btn-lg button-primary">Back to all the articles</a>
+    </div>
+</div>

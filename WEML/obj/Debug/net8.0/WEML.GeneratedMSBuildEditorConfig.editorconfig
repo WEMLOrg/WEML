@@ -17,63 +17,91 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WEML
 build_property.RootNamespace = WEML
-build_property.ProjectDir = C:\Users\maria\Source\Repos\WEMLOrg\WEML\WEML\
+build_property.ProjectDir = C:\Users\40723\Source\Repos\WEMLOrg\WEML\WEML\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\maria\Source\Repos\WEMLOrg\WEML\WEML
+build_property.MSBuildProjectDirectory = C:\Users\40723\Source\Repos\WEMLOrg\WEML\WEML
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/Account/Login.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/Account/Logout.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/Account/Register.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/Account/Profile.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Account/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/Home/Index.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Articles/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Articles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXJ0aWNsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Games/GetAllChallanges.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZXNcR2V0QWxsQ2hhbGxhbmdlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Games/OpenChallange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZXNcT3BlbkNoYWxsYW5nZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Games/Results.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZXNcUmVzdWx0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Home/FeelingsForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGZWVsaW5nc0Zvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/Home/Privacy.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/Error.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Home/SymptomsForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTeW1wdG9tc0Zvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/_ViewImports.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/_ViewStart.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/maria/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/_Layout.cshtml]
+[C:/Users/40723/Source/Repos/WEMLOrg/WEML/WEML/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-qtmh50rwa9
