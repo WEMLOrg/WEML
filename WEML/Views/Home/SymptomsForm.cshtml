@@ -7,7 +7,28 @@
 <form asp-action="SubmitSymptom" asp-controller="Home" method="post">
     <div class="form-group">
         <label for="SymptomName">Symptom Name</label>
-        <input type="text" class="form-control" id="SymptomName" name="SymptomName" placeholder="Enter symptom name" required>
+        <select class="form-control" id="SymptomName" name="SymptomName" required>
+            <option>Blurred Vision</option>
+            <option>Chest Pain</option>
+            <option>Confusion</option>
+            <option>Cough</option>
+            <option>Difficulty Seeing at Night</option>
+            <option>Dizziness</option>
+            <option>Excessive Thirst</option>
+            <option>Fatigue</option>
+            <option>Fever</option>
+            <option>Frequent Urination</option>
+            <option>Headache</option>
+            <option>Joint Pain</option>
+            <option>Memory Loss</option>
+            <option>Numbness</option>
+            <option>Nausea</option>
+            <option>Painful Urination</option>
+            <option>Shortness of Breath</option>
+            <option>Speech Difficulty</option>
+            <option>Stiffness</option>
+            <option>Weakness</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="SymptomDescription">Description</label>

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WEML.Diagnosis;
 using WEML.Models;
 using WEML.Repos;
 
@@ -10,16 +11,20 @@ namespace WEML.Controllers
         private readonly ILogger<HomeController> _logger;
         private SymptomsRepo _symptomsRepo;
         private FeelingsRepo _feelingsRepo;
-
-        public HomeController(ILogger<HomeController> logger, SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo)
+        private readonly DiagnosisEngine _diagnosisEngine;
+        
+        public HomeController(ILogger<HomeController> logger, SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo, DiagnosisEngine diagnosisEngine)
         {
             _logger = logger;
             _symptomsRepo = symptomsRepo;
             _feelingsRepo = feelingsRepo;
+            _diagnosisEngine = diagnosisEngine;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            string diagnosis = await _diagnosisEngine.GetDiagnosisAsync();
+            ViewData["Diagnosis"] = diagnosis;
             return View();
         }
 
