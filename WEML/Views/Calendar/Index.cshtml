@@ -1,0 +1,146 @@
+﻿@model IEnumerable<WEML.Controllers.DaySummaryViewModel>
+
+@{
+    ViewData["Title"] = "Calendar";
+
+    var currentYear = ViewData["Year"] != null ? (int)ViewData["Year"] : DateTime.Now.Year;
+    var currentMonth = ViewData["Month"] != null ? (int)ViewData["Month"] : DateTime.Now.Month;
+
+    var daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+    var firstDayOfMonth = new DateTime(currentYear, currentMonth, 1);
+    var lastDayOfMonth = new DateTime(currentYear, currentMonth, daysInMonth);
+    var currentMonthDays = Model.ToDictionary(d => d.Date.Date);
+
+    var startPadding = (int)firstDayOfMonth.DayOfWeek;
+
+    var previousMonth = currentMonth == 1 ? 12 : currentMonth - 1;
+    var previousYear = currentMonth == 1 ? currentYear - 1 : currentYear;
+
+    var nextMonth = currentMonth == 12 ? 1 : currentMonth + 1;
+    var nextYear = currentMonth == 12 ? currentYear + 1 : currentYear;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="calendar-navigation">
+    <a asp-action="Index" asp-route-year="@previousYear" asp-route-month="@previousMonth" class="nav-link">Previous Month</a>
+    <span class="current-month">@firstDayOfMonth.ToString("MMMM yyyy")</span>
+    <a asp-action="Index" asp-route-year="@nextYear" asp-route-month="@nextMonth" class="nav-link">Next Month</a>
+</div>
+
+<div class="calendar-container">
+    <div class="calendar-grid">
+        @for (int i = 0; i < startPadding; i++)
+        {
+            <div class="calendar-cell empty"></div>
+        }
+
+        @for (int day = 1; day <= daysInMonth; day++)
+        {
+            var currentDate = new DateTime(currentYear, currentMonth, day);
+            if (currentMonthDays.TryGetValue(currentDate, out var daySummary))
+            {
+                <div class="calendar-cell">
+                    <strong>@currentDate.ToString("MMM dd")</strong>
+                    <ul>
+                        @if (daySummary.SymptomsCount > 0)
+                        {
+                            <li>@daySummary.SymptomsCount symptom(s)</li>
+                        }
+                        @if (daySummary.FeelingsCount > 0)
+                        {
+                            <li>@daySummary.FeelingsCount feeling(s)</li>
+                        }
+                    </ul>
+
+                    <a asp-action="DetailsOfDate" asp-route-date="@currentDate.ToString("yyyy-MM-dd")" class="details-link">
+                        View Details
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="calendar-cell empty">
+                    <strong>@currentDate.ToString("MMM dd")</strong>
+                    <p>No data</p>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<style>
+    .calendar-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .calendar-navigation .nav-link {
+            font-size: 16px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+            .calendar-navigation .nav-link:hover {
+                text-decoration: underline;
+            }
+
+        .calendar-navigation .current-month {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .calendar-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .calendar-cell {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        background-color: #f9f9f9;
+    }
+
+        .calendar-cell.empty {
+            background-color: #eaeaea;
+        }
+
+        .calendar-cell strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .calendar-cell ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 10px;
+            font-size: 12px;
+        }
+
+            .calendar-cell ul li {
+                margin: 2px 0;
+            }
+
+    .details-link {
+        font-size: 12px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .details-link:hover {
+            text-decoration: underline;
+        }
+</style>

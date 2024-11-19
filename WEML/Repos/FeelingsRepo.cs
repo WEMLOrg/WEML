@@ -30,4 +30,20 @@ public class FeelingsRepo
     {
         return await _context.Feelings.ToListAsync();
     }
+
+    public async Task<IEnumerable<Feeling>> GetFeelingsByDateRangeAsync(DateTime startDate, DateTime endDate)
+    {
+        return await _context.Feelings
+            .Where(f => f.DateTime >= startDate && f.DateTime <= endDate)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Feeling>> GetAllFeelingsByDate(DateTime date)
+    {
+        return await _context.Feelings
+            .Where(f => f.DateTime.Date == date.Date)
+            .ToListAsync();
+    }
+
+
 }

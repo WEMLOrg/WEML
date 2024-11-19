@@ -8,4 +8,5 @@ public class Feeling
     public String FeelingName { get; set; }
     public String FeelingDescription { get; set; }
     public String FeelingSeverity { get; set; }
+    public DateTime DateTime { get; set; }
 }

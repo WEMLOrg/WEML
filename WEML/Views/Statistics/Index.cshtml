@@ -1,0 +1,94 @@
+﻿@model WEML.Controllers.ConsolidatedStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Statistics Overview";
+}
+
+<h1>Statistics Overview</h1>
+
+<h2>Most Frequent Entries</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Occurrences</th>
+            <th>Average Severity</th>
+        </tr>
+    </thead>
+    <tbody>
+             @if (Model.MostFrequentSymptom != null)
+            {
+                <tr>
+                    <td>Symptom</td>
+                    <td>@Model.MostFrequentSymptom.Name</td>
+                    <td>@Model.MostFrequentSymptom.Count</td>
+                    <td>@Model.MostFrequentSymptom.AverageSeverity.ToString("0.##")</td>
+                </tr>
+            }
+            @if (Model.MostFrequentFeeling != null)
+            {
+                <tr>
+                    <td>Feeling</td>
+                    <td>@Model.MostFrequentFeeling.Name</td>
+                    <td>@Model.MostFrequentFeeling.Count</td>
+                    <td>@Model.MostFrequentFeeling.AverageSeverity.ToString("0.##")</td>
+                </tr>
+            }
+            else
+            {
+            <p>No frequent entries found.</p>
+            }
+    </tbody>
+</table>
+
+<h2>Monthly Statistics</h2>
+
+@foreach (var monthYear in Model.SymptomStatistics.Select(s => s.MonthYear).Union(Model.FeelingStatistics.Select(f => f.MonthYear)).Distinct().OrderByDescending(m => m))
+{
+    <h3>@monthYear.ToString("MMMM yyyy")</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Occurrences</th>
+                <th>Average Severity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.FeelingStatistics != null && Model.FeelingStatistics.Any())
+            {
+            @foreach (var symptom in Model.SymptomStatistics.FirstOrDefault(m => m.MonthYear == monthYear)?.Entries ?? Enumerable.Empty<WEML.Controllers.Statistics>())
+            {
+                <tr>
+                    <td>Symptom</td>
+                    <td>@symptom.Name</td>
+                    <td>@symptom.Count</td>
+                    <td>@symptom.AverageSeverity.ToString("0.##")</td>
+                </tr>
+            }
+            }
+            else
+            {
+                <p>No symptom data available.</p>
+            }
+            @if (Model.FeelingStatistics != null && Model.FeelingStatistics.Any())
+            {
+            @foreach (var feeling in Model.FeelingStatistics.FirstOrDefault(m => m.MonthYear == monthYear)?.Entries ?? Enumerable.Empty<WEML.Controllers.Statistics>())
+            {
+                <tr>
+                    <td>Feeling</td>
+                    <td>@feeling.Name</td>
+                    <td>@feeling.Count</td>
+                    <td>@feeling.AverageSeverity.ToString("0.##")</td>
+                </tr>
+            }}
+            else
+            {
+                <p>No feeling data available.</p>
+            }
+
+        </tbody>
+    </table>
+    }

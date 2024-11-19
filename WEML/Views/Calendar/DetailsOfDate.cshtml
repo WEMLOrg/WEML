@@ -1,0 +1,75 @@
+﻿@model WEML.Controllers.DayDetailsViewModel
+
+@{
+    ViewData["Title"] = "Day Details";
+}
+
+<div>
+    <h3>Details for: @Model.Date.ToString("MMMM dd, yyyy")</h3>
+    <hr />
+
+    <h4>Symptoms</h4>
+    @if (Model.Symptoms != null && Model.Symptoms.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Symptom Name</th>
+                    <th>Intensity</th>
+                    <th>Description</th>
+                    <th>Time Reported</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var symptom in Model.Symptoms)
+                {
+                    <tr>
+                        <td>@symptom.SymptomName</td>
+                        <td>@symptom.Severity</td>
+                        <td>@symptom.SymptomDescription</td>
+                        <td>@symptom.DateTime.ToLocalTime</td> 
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No symptoms reported on this day.</p>
+    }
+
+    <h5>Feelings</h5>
+    @if (Model.Feelings != null && Model.Feelings.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Feeling</th>
+                    <th>Description</th>
+                    <th>Severity</th>
+                    <th>Time Reported</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var feeling in Model.Feelings)
+                {
+                    <tr>
+                        <td>@feeling.FeelingName</td>
+                        <td>@feeling.FeelingDescription</td>
+                        <td>@feeling.FeelingSeverity</td>
+                        <td>@feeling.DateTime.ToLocalTime</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No feelings reported on this day.</p>
+    }
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-year="@ViewData["Year"]" asp-route-month="@ViewData["Month"]" class="nav-link">Go Back</a>
+
+</div>

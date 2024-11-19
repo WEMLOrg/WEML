@@ -8,4 +8,5 @@ public class Symptom
     public String SymptomName { get; set; }
     public String SymptomDescription { get; set; }
     public String Severity { get; set; }
+    public DateTime DateTime { get; set; }
 }

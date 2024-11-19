@@ -63,7 +63,8 @@ namespace WEML.Controllers
                 SymptomName = SymptomName,
                 Severity = Severity,
                 SymptomDescription = SymptomDescription,
-                SymptomId = new Guid()
+                SymptomId = new Guid(),
+                DateTime = DateTime.Now
             };
             await _symptomsRepo.AddSymptomAsync(newSymtom);
             TempData["Message"] = "Symptom submitted successfully!";
@@ -84,7 +85,8 @@ namespace WEML.Controllers
                 FeelingName = FeelingName,
                 FeelingDescription = FeelingDescription,
                 FeelingId = new Guid(),
-                FeelingSeverity = FeelingSeverity
+                FeelingSeverity = FeelingSeverity,
+                DateTime = DateTime.Now
             };
             
             await _feelingsRepo.AddFeelingAsync(newFeeling);

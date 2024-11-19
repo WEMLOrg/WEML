@@ -41,6 +41,9 @@ namespace WEML.Data
             modelBuilder.Entity<Challange>()
                 .Property(c => c.cId)
                 .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Symptom>().Property(s => s.SymptomId);
+            modelBuilder.Entity<Feeling>().Property(s => s.FeelingId);
         }
        // public DbSet<WEML.Models.Article> Article { get; set; } = default!;
         // public DbSet<User> Users {  get; set; }
