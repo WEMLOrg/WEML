@@ -44,4 +44,21 @@ public class SymptomsRepo
             .Where(s => s.DateTime.Date == date.Date)
             .ToListAsync();
     }
+    
+    private async Task<List<Symptom>> GetRecentSymptomsAsync(int count = 10)
+    {
+        return await _context.Symptoms
+            .OrderByDescending(s => s.DateTime) 
+            .Take(count)                        
+            .ToListAsync();
+    }
+    
+    public async Task<List<string>> GetMostRecentSymptomsAsync()
+    {
+        var recentSymptoms = await GetRecentSymptomsAsync(10);
+
+        return recentSymptoms.Select(s => s.SymptomName).ToList();
+    }
+
+
 }

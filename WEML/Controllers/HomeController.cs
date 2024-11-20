@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WEML.Diagnosis;
 using WEML.Models;
 using WEML.Repos;
 
@@ -21,10 +20,36 @@ namespace WEML.Controllers
             _diagnosisEngine = diagnosisEngine;
         }
 
+        // public async Task<IActionResult> Index()
+        // {
+        //     var recentSymptoms = await _symptomsRepo.GetMostRecentSymptomsAsync();
+        //     string diagnosis = await _diagnosisEngine.GetDiagnosisAsync();
+        //     ViewData["Diagnosis"] = diagnosis;
+        //     return View();
+        // }
+        
         public async Task<IActionResult> Index()
         {
-            string diagnosis = await _diagnosisEngine.GetDiagnosisAsync();
-            ViewData["Diagnosis"] = diagnosis;
+            try
+            {
+                var recentSymptoms = await _symptomsRepo.GetMostRecentSymptomsAsync();
+
+                if (recentSymptoms != null && recentSymptoms.Any())
+                {
+                    string diagnosis = await _diagnosisEngine.GetDiagnosisAsync(recentSymptoms);
+                    ViewData["Diagnosis"] = diagnosis;
+                }
+                else
+                {
+                    ViewData["Diagnosis"] = "No symptoms found to generate a diagnosis.";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error generating diagnosis");
+                ViewData["Diagnosis"] = "An error occurred while generating a diagnosis.";
+            }
+
             return View();
         }
 
@@ -93,6 +118,23 @@ namespace WEML.Controllers
             
             TempData["Message"] = "Feeling submitted successfully!";
             return RedirectToAction("Index");
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> SearchSymptoms(string term)
+        {
+            if (string.IsNullOrWhiteSpace(term))
+                return Json(new List<string>());
+
+            var symptoms = await _symptomsRepo.GetAllSymptomsAsync();
+            var matches = symptoms
+                .Where(s => s.SymptomName.Contains(term, StringComparison.OrdinalIgnoreCase))
+                .Select(s => s.SymptomName)
+                .Distinct()
+                .Take(10) 
+                .ToList();
+
+            return Json(matches);
         }
 
 

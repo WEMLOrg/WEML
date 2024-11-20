@@ -5,31 +5,39 @@
 <h2>Symptoms Form</h2>
 
 <form asp-action="SubmitSymptom" asp-controller="Home" method="post">
+    @* <div class="form-group"> *@
+    @*     <label for="SymptomName">Symptom Name</label> *@
+    @*     <select class="form-control" id="SymptomName" name="SymptomName" required> *@
+    @*         <option>Blurred Vision</option> *@
+    @*         <option>Chest Pain</option> *@
+    @*         <option>Confusion</option> *@
+    @*         <option>Cough</option> *@
+    @*         <option>Difficulty Seeing at Night</option> *@
+    @*         <option>Dizziness</option> *@
+    @*         <option>Excessive Thirst</option> *@
+    @*         <option>Fatigue</option> *@
+    @*         <option>Fever</option> *@
+    @*         <option>Frequent Urination</option> *@
+    @*         <option>Headache</option> *@
+    @*         <option>Joint Pain</option> *@
+    @*         <option>Memory Loss</option> *@
+    @*         <option>Numbness</option> *@
+    @*         <option>Nausea</option> *@
+    @*         <option>Painful Urination</option> *@
+    @*         <option>Shortness of Breath</option> *@
+    @*         <option>Speech Difficulty</option> *@
+    @*         <option>Stiffness</option> *@
+    @*         <option>Weakness</option> *@
+    @*     </select> *@
+    @* </div> *@
     <div class="form-group">
         <label for="SymptomName">Symptom Name</label>
-        <select class="form-control" id="SymptomName" name="SymptomName" required>
-            <option>Blurred Vision</option>
-            <option>Chest Pain</option>
-            <option>Confusion</option>
-            <option>Cough</option>
-            <option>Difficulty Seeing at Night</option>
-            <option>Dizziness</option>
-            <option>Excessive Thirst</option>
-            <option>Fatigue</option>
-            <option>Fever</option>
-            <option>Frequent Urination</option>
-            <option>Headache</option>
-            <option>Joint Pain</option>
-            <option>Memory Loss</option>
-            <option>Numbness</option>
-            <option>Nausea</option>
-            <option>Painful Urination</option>
-            <option>Shortness of Breath</option>
-            <option>Speech Difficulty</option>
-            <option>Stiffness</option>
-            <option>Weakness</option>
+        <input type="text" class="form-control" id="SymptomSearch" placeholder="Search symptoms..." autocomplete="off" />
+        <select class="form-control mt-2" id="SymptomName" name="SymptomName" required>
+            <option value="">Select a symptom</option>
         </select>
     </div>
+
     <div class="form-group">
         <label for="SymptomDescription">Description</label>
         <textarea class="form-control" id="SymptomDescription" name="SymptomDescription" rows="4" placeholder="Describe your symptom" required></textarea>
@@ -44,3 +52,29 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit Symptom</button>
 </form>
+
+<script>
+    document.getElementById('SymptomSearch').addEventListener('input', async function () {
+        console.log("in the script");
+        const query = this.value.trim();
+        const symptomDropdown = document.getElementById('SymptomName');
+
+        if (query.length < 2) {
+            
+            symptomDropdown.innerHTML = '<option value="">Select a symptom</option>';
+            return;
+        }
+
+        try {
+    
+            const response = await fetch(`http://127.0.0.1:5000/search_symptoms?term=${encodeURIComponent(query)}`);
+            const symptoms = await response.json();
+            console.log(symptoms);
+            symptomDropdown.innerHTML = symptoms.length
+                ? symptoms.map(symptom => `<option value="${symptom}">${symptom}</option>`).join('')
+                : '<option value="">No symptoms found</option>';
+        } catch (error) {
+            console.error('Error fetching symptoms:', error);
+        }
+    });
+</script>

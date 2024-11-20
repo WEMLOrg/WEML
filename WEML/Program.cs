@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WEML.Data;
-using WEML.Diagnosis;
 using WEML.Models;
 using WEML.Repos;
 
@@ -19,6 +18,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+builder.Services.AddHttpClient();
+
 builder.Services.AddScoped<SymptomsRepo>();
 builder.Services.AddScoped<FeelingsRepo>();
 builder.Services.AddScoped<DiagnosisEngine>();
