@@ -101,20 +101,20 @@ namespace WEML.Controllers
         }
     }
 
-    internal class Statistics
+    public class Statistics
     {
         public string Name { get; set; }
         public int Count { get; set; }
         public double AverageSeverity { get; set; }
     }
 
-    internal class MonthlyStatistics
+    public class MonthlyStatistics
     {
         public DateTime MonthYear { get; set; }
         public List<Statistics> Entries { get; set; }
     }
 
-    internal class ConsolidatedStatisticsViewModel
+    public class ConsolidatedStatisticsViewModel
     {
         public List<MonthlyStatistics> SymptomStatistics { get; set; }
         public List<MonthlyStatistics> FeelingStatistics { get; set; }
