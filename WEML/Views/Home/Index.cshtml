@@ -1,40 +1,49 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">@TempData["Message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button></div>
+        }
+        <p class="display-4">Welcome! How are you feeling today?</p>
+        <p class="paragraf-main-page">Please add a symptom or feeling using the following buttons:</p>
+        <div class="buttons-for-symptoms-main-page">
+            <div class="button-container">
+                <a asp-controller="Home" asp-action="SymptomsForm" class="circular-button">
+                    <span class="red-cross">+</span>
+                    <span class="button-text">ADD SYMPTOM</span>
+                </a>
+            </div>
+            <div class="button-container">
+                <a asp-controller="Home" asp-action="FeelingsForm" class="circular-button">
+                    <span class="red-cross">+</span>
+                    <span class="button-text">ADD FEELING</span>
+                </a>
+            </div>
+        </div>
+        @if (ViewData["Diagnosis"] != null)
+        {
+            <div class="diagnosis-box">
+                <h4>Possible Diagnosis:</h4>
+                <p>@ViewData["Diagnosis"]</p>
+            </div>
+        }
 
+    </div>
+}
+else
+{
 <div class="text-center">
-    @if (TempData["Message"] != null)
-    {
-    <div class="alert alert-success">@TempData["Message"]
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button></div>
-    }
-    <p class="display-4">Welcome! How are you feeling today?</p>
-    <p class="paragraf-main-page">Please add a symptom or feeling using the following buttons:</p>
-    <div class="buttons-for-symptoms-main-page">
-        <div class="button-container">
-            <a asp-controller="Home" asp-action="SymptomsForm" class="circular-button">
-                <span class="red-cross">+</span>
-                <span class="button-text">ADD SYMPTOM</span>
-            </a>
-        </div>
-        <div class="button-container">
-            <a asp-controller="Home" asp-action="FeelingsForm" class="circular-button">
-                <span class="red-cross">+</span>
-                <span class="button-text">ADD FEELING</span>
-            </a>
-        </div>
-    </div>
-    @if (ViewData["Diagnosis"] != null)
-    {
-    <div class="diagnosis-box">
-        <h4>Possible Diagnosis:</h4>
-        <p>@ViewData["Diagnosis"]</p>
-    </div>
-    }
-
+    <p>Please register/log in!</p>
 </div>
+}
+
 
 <style>
     .diagnosis-box {
