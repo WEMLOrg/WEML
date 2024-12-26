@@ -9,4 +9,6 @@ public class Symptom
     public String SymptomDescription { get; set; }
     public String Severity { get; set; }
     public DateTime DateTime { get; set; }
+
+    public virtual ICollection<SymptomUser> SymptomUsers { get; set; }
 }

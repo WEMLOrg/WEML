@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using WEML.Models;
 
 namespace WEML.Areas.Identity.Pages.Account;
 
@@ -62,8 +63,13 @@ public class RegisterModel : PageModel
         [DataType(DataType.Text)]
         [Display(Name = "Phone Number of a trusted Contact Person")]
         public string ContactPersonPhone { get; set; }
-        
-        
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Email of Your general Health-Care Provider")]
+        public string ContactDoctorEmail { get; set; }
+
+
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -98,8 +104,11 @@ public class RegisterModel : PageModel
                 user.LastName = Input.LastName;
                 user.DateOfBirth = Input.DateOfBirth;
                 user.ContactPersonPhone = Input.ContactPersonPhone;
+                user.ContactDoctorEmail = Input.ContactDoctorEmail;
                 user.currentDiagnosis = "no diagnosis";
                 user.numberOfPoints = "0";
+                user.SymptomUsers = new List<SymptomUser>();
+                user.FeelingUsers = new List<FeelingUser>();
                 user.UserId = new Guid();
                 
 

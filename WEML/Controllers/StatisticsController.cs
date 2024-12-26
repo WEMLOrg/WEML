@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WEML.Models;
@@ -21,8 +22,9 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var symptoms = await _symptomsRepo.GetAllSymptomsAsync();
-            var feelings = await _feelingsRepo.GetAllFeelingsAsync();
+            ClaimsPrincipal currentUser = User;
+            var symptoms = await _symptomsRepo.GetAllSymptomsAsync(currentUser);
+            var feelings = await _feelingsRepo.GetAllFeelingsAsync(currentUser);
 
             var symptomStatistics = symptoms
                 .GroupBy(s => new { Year = s.DateTime.Year, Month = s.DateTime.Month })

@@ -18,7 +18,7 @@
                 <div class="card-body text-center">
                     <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
                     <h5>We recommend reading this article to learn more about: <b>@Html.DisplayFor(modelItem => item.Symptom)</b> in people your age</h5>
-                    <h5>@Html.DisplayNameFor(model => model.Description)</h5>
+                    <h5>@Html.DisplayFor(model => model.Description)</h5>
                 </div>
                 <a asp-action="Details" asp-route-id="@item.Uri" class="button-primary">Click here to read more</a> 
             </div>

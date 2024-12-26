@@ -9,4 +9,6 @@ public class Feeling
     public String FeelingDescription { get; set; }
     public String FeelingSeverity { get; set; }
     public DateTime DateTime { get; set; }
+
+    public virtual ICollection<FeelingUser> FeelingUser { get; set; }
 }

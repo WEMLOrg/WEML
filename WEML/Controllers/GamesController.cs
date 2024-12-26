@@ -2,16 +2,21 @@
 using WEML.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using WEML.Areas.Identity.Data;
 
 namespace WEML.Controllers
 {
     public class GamesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> GetAllQuestionsForAChallange(int? id)
@@ -90,6 +95,11 @@ namespace WEML.Controllers
 
             return View(questions);
         }
+        private async Task<User?> GetUserAsync()
+        {
+            ClaimsPrincipal currentUser = User;
+            return await _userManager.GetUserAsync(currentUser);
+        }
 
         [HttpPost]
         public async Task<IActionResult> SubmitAnswers(Dictionary<int, string> selectedAnswers)
@@ -97,10 +107,8 @@ namespace WEML.Controllers
             if (selectedAnswers == null || !selectedAnswers.Any())
             {
                 ViewBag.ErrorMessage = "Please select an answer for each question.";
-                return View("OpenChallange"); // Ensure you pass the model again if necessary
+                return View("OpenChallange"); 
 
-                // Option 2: You could choose to return a view with all questions here
-                // You may want to retrieve questions again for rendering
             }
 
             int totalPoints = 0;
@@ -113,8 +121,10 @@ namespace WEML.Controllers
                     totalPoints += question.points;
                 }
             }
-
+            var user = await GetUserAsync();
+            user.numberOfPoints += totalPoints;
             ViewBag.TotalPoints = totalPoints;
+            
             return View("Results");
         }
 

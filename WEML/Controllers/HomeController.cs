@@ -4,6 +4,7 @@ using WEML.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using WEML.Models;
 using WEML.Repos;
+using System.Security.Claims;
 
 namespace WEML.Controllers
 {
@@ -14,7 +15,7 @@ namespace WEML.Controllers
         private SymptomsRepo _symptomsRepo;
         private FeelingsRepo _feelingsRepo;
         private readonly DiagnosisEngine _diagnosisEngine;
-        
+
         public HomeController(UserManager<User> userManager,ILogger<HomeController> logger, SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo, DiagnosisEngine diagnosisEngine)
         {
             _logger = logger;
@@ -36,7 +37,8 @@ namespace WEML.Controllers
         {
             try
             {
-                var recentSymptoms = await _symptomsRepo.GetMostRecentSymptomsAsync();
+                ClaimsPrincipal currentUser = User;
+                var recentSymptoms = await _symptomsRepo.GetMostRecentSymptomsAsync(currentUser);
 
                 if (recentSymptoms != null && recentSymptoms.Any())
                 {
@@ -95,7 +97,8 @@ namespace WEML.Controllers
                 SymptomId = new Guid(),
                 DateTime = DateTime.Now
             };
-            await _symptomsRepo.AddSymptomAsync(newSymtom);
+            ClaimsPrincipal currentUser = User;
+            await _symptomsRepo.AddSymptomAsync(newSymtom, currentUser);
             TempData["Message"] = "Symptom submitted successfully!";
             return RedirectToAction("Index");
         }
@@ -117,8 +120,8 @@ namespace WEML.Controllers
                 FeelingSeverity = FeelingSeverity,
                 DateTime = DateTime.Now
             };
-            
-            await _feelingsRepo.AddFeelingAsync(newFeeling);
+            ClaimsPrincipal currentUser = User;
+            await _feelingsRepo.AddFeelingAsync(newFeeling, currentUser);
             
             TempData["Message"] = "Feeling submitted successfully!";
             return RedirectToAction("Index");
@@ -129,8 +132,8 @@ namespace WEML.Controllers
         {
             if (string.IsNullOrWhiteSpace(term))
                 return Json(new List<string>());
-
-            var symptoms = await _symptomsRepo.GetAllSymptomsAsync();
+            ClaimsPrincipal currentUser = User;
+            var symptoms = await _symptomsRepo.GetAllSymptomsAsync(currentUser);
             var matches = symptoms
                 .Where(s => s.SymptomName.Contains(term, StringComparison.OrdinalIgnoreCase))
                 .Select(s => s.SymptomName)

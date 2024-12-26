@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WEML.Models;
@@ -35,14 +36,15 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> Index(int? year, int? month)
         {
+            ClaimsPrincipal currentUser = User;
             int currentYear = year ?? DateTime.Now.Year;
             int currentMonth = month ?? DateTime.Now.Month;
 
             var startDate = new DateTime(currentYear, currentMonth, 1);
             var endDate = startDate.AddMonths(1).AddDays(-1);
 
-            var symptoms = await _symptomsRepo.GetSymptomsByDateRangeAsync(startDate, endDate);
-            var feelings = await _feelingsRepo.GetFeelingsByDateRangeAsync(startDate, endDate);
+            var symptoms = await _symptomsRepo.GetSymptomsByDateRangeAsync(startDate, endDate, currentUser);
+            var feelings = await _feelingsRepo.GetFeelingsByDateRangeAsync(startDate, endDate, currentUser);
 
             var symptomGroups = symptoms
                 .GroupBy(s => s.DateTime.Date)
@@ -72,13 +74,14 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> DetailsOfDate(DateTime date)
         {
+            ClaimsPrincipal currentUser = User;
             if (date == default)
             {
                 return NotFound();
             }
 
-            var symptoms = await _symptomsRepo.GetAllSymptomsByDate(date);
-            var feelings = await _feelingsRepo.GetAllFeelingsByDate(date);
+            var symptoms = await _symptomsRepo.GetAllSymptomsByDate(date, currentUser);
+            var feelings = await _feelingsRepo.GetAllFeelingsByDate(date, currentUser);
 
             var viewModel = new DayDetailsViewModel
             {
