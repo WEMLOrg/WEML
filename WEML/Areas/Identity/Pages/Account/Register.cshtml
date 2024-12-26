@@ -1,52 +1,73 @@
-﻿@using WEML.Models
-@model RegisterViewModel
+@page
+@using WEML.Models
+@model WEML.Areas.Identity.Pages.Account.RegisterModel
 
 @{
     ViewData["Title"] = "Register";
+    Layout = "~/Areas/Identity/Pages/_AuthLayout.cshtml";
 }
-aa
 <h2>Register</h2>
 
-<form asp-action="Register" method="post">
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-floating mb-3">
+                <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="first name" />
+                <label asp-for="Input.FirstName">First Name</label>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="last name" />
+                <label asp-for="Input.LastName">Last Name</label>
+            </div>
+        </div>
     </div>
     <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
+        <label asp-for="Input.Email">Email</label>
+        <input asp-for="Input.Email" class="form-control"/>
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+        
     </div>
     <div class="form-group">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" class="form-control" type="password" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <label asp-for="Input.Password">Password</label>
+        <input asp-for="Input.Password" class="form-control" type="password"/>
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+        
+    </div>
+    
+    @* <div class="form-group"> *@
+    @*     <label asp-for="FirstName"></label> *@
+    @*     <input asp-for="FirstName" class="form-control"/> *@
+    @*     <span asp-validation-for="FirstName" class="text-danger"></span> *@
+    @* </div> *@
+    @* <div class="form-group"> *@
+    @*     <label asp-for="LastName"></label> *@
+    @*     <input asp-for="LastName" class="form-control"/> *@
+    @*     <span asp-validation-for="LastName" class="text-danger"></span> *@
+    @* </div> *@
+    <div class="form-group">
+        <label asp-for="Input.DateOfBirth">Date of Birth</label>
+        <input asp-for="Input.DateOfBirth" class="form-control" type="text"/>
     </div>
     <div class="form-group">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DateOfBirth"></label>
-        <input asp-for="DateOfBirth" class="form-control" type="date" />
-        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        <label asp-for="Input.ContactPersonPhone">Phone Number of Trusted Person</label>
+        <input asp-for="Input.ContactPersonPhone" class="form-control" type="text"/>
+        
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
 
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="text-danger">
-        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-        {
-            <div>@error.ErrorMessage</div>
-        }
-    </div>
+ @if (!ViewData.ModelState.IsValid) 
+ { 
+     <div class="text-danger"> 
+         @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors)) 
+         { 
+             <div>@error.ErrorMessage</div> 
+         } 
+     </div> 
+ }
+ 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WEML.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using WEML.Models;
 using WEML.Repos;
 
@@ -7,14 +9,16 @@ namespace WEML.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<HomeController> _logger;
         private SymptomsRepo _symptomsRepo;
         private FeelingsRepo _feelingsRepo;
         private readonly DiagnosisEngine _diagnosisEngine;
         
-        public HomeController(ILogger<HomeController> logger, SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo, DiagnosisEngine diagnosisEngine)
+        public HomeController(UserManager<User> userManager,ILogger<HomeController> logger, SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo, DiagnosisEngine diagnosisEngine)
         {
             _logger = logger;
+            this._userManager = userManager;
             _symptomsRepo = symptomsRepo;
             _feelingsRepo = feelingsRepo;
             _diagnosisEngine = diagnosisEngine;
@@ -49,7 +53,7 @@ namespace WEML.Controllers
                 _logger.LogError(ex, "Error generating diagnosis");
                 ViewData["Diagnosis"] = "An error occurred while generating a diagnosis.";
             }
-
+            ViewData["UserID"]=_userManager.GetUserId(this.User);
             return View();
         }
 
@@ -136,6 +140,8 @@ namespace WEML.Controllers
 
             return Json(matches);
         }
+        
+        
 
 
     }

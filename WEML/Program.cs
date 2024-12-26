@@ -1,3 +1,4 @@
+using WEML.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WEML.Data;
@@ -12,12 +13,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-   // .AddEntityFrameworkStores<ApplicationDbContext>();
-
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+//
+// builder.Services.AddIdentity<User, IdentityRole>()
+//     .AddEntityFrameworkStores<ApplicationDbContext>()
+//     .AddDefaultTokenProviders();
 builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<SymptomsRepo>();
@@ -46,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();
+// app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
