@@ -171,6 +171,10 @@ namespace WEML.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ContactDoctorEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("ContactPersonPhone")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
@@ -320,6 +324,21 @@ namespace WEML.Data.Migrations
                     b.ToTable("Feelings");
                 });
 
+            modelBuilder.Entity("WEML.Models.FeelingUser", b =>
+                {
+                    b.Property<Guid>("FeelingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("FeelingId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FeelingUsers");
+                });
+
             modelBuilder.Entity("WEML.Models.Question", b =>
                 {
                     b.Property<int>("qId")
@@ -378,6 +397,21 @@ namespace WEML.Data.Migrations
                     b.HasKey("SymptomId");
 
                     b.ToTable("Symptoms");
+                });
+
+            modelBuilder.Entity("WEML.Models.SymptomUser", b =>
+                {
+                    b.Property<Guid>("SymptomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("SymptomId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SymptomUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -450,14 +484,69 @@ namespace WEML.Data.Migrations
                     b.Navigation("Question");
                 });
 
+            modelBuilder.Entity("WEML.Models.FeelingUser", b =>
+                {
+                    b.HasOne("WEML.Models.Feeling", "Feeling")
+                        .WithMany("FeelingUser")
+                        .HasForeignKey("FeelingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WEML.Areas.Identity.Data.User", "User")
+                        .WithMany("FeelingUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Feeling");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WEML.Models.SymptomUser", b =>
+                {
+                    b.HasOne("WEML.Models.Symptom", "Symptom")
+                        .WithMany("SymptomUsers")
+                        .HasForeignKey("SymptomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WEML.Areas.Identity.Data.User", "User")
+                        .WithMany("SymptomUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Symptom");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WEML.Areas.Identity.Data.User", b =>
+                {
+                    b.Navigation("FeelingUsers");
+
+                    b.Navigation("SymptomUsers");
+                });
+
             modelBuilder.Entity("WEML.Models.Challange", b =>
                 {
                     b.Navigation("ChallangeQuestions");
                 });
 
+            modelBuilder.Entity("WEML.Models.Feeling", b =>
+                {
+                    b.Navigation("FeelingUser");
+                });
+
             modelBuilder.Entity("WEML.Models.Question", b =>
                 {
                     b.Navigation("ChallangeQuestions");
+                });
+
+            modelBuilder.Entity("WEML.Models.Symptom", b =>
+                {
+                    b.Navigation("SymptomUsers");
                 });
 #pragma warning restore 612, 618
         }

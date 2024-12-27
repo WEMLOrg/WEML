@@ -37,12 +37,16 @@ namespace WEML.Controllers
         {
             try
             {
+                Console.WriteLine("in home controller");
                 ClaimsPrincipal currentUser = User;
+                Console.WriteLine("Home controller user: " + currentUser.Identity.Name);
                 var recentSymptoms = await _symptomsRepo.GetMostRecentSymptomsAsync(currentUser);
-
+                Console.WriteLine("Home controller recent symptoms  : " + recentSymptoms.Count);
                 if (recentSymptoms != null && recentSymptoms.Any())
                 {
+                    Console.WriteLine("incerc sa aflu diagnosis");
                     string diagnosis = await _diagnosisEngine.GetDiagnosisAsync(recentSymptoms);
+                    Console.WriteLine("Home controller diagnosis " + diagnosis);
                     ViewData["Diagnosis"] = diagnosis;
                 }
                 else

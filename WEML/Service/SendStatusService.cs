@@ -5,8 +5,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using WEML.Areas.Identity.Data;
 using Microsoft.Identity.Client;
 using System.Net.Http;
-using Azure.Communication;
-using Azure.Communication.Sms;
+// using Azure.Communication;
+// using Azure.Communication.Sms;
 using System.Text.Json;
 
 namespace WEML.Service
@@ -30,7 +30,7 @@ namespace WEML.Service
             this.diagnosys = "N.AM IDEE";       // hello?
             this.userName = user.FirstName + " " + user.LastName;
 
-            this.recipientEmail = user.ContactPersonPhone;  //ar trebui mail idfk
+            this.recipientEmail = user.ContactDoctorEmail;  //ar trebui mail idfk
             this.subject = "Health Update On Pacient " + userName;
             SendToDoctor();
 
@@ -77,12 +77,12 @@ namespace WEML.Service
             body = body + "\b\n Based on the new info and our previously added data, our ai system suggested " + this.diagnosys + " as a possible diagnosys. \n You might consider giving them a call. \n \n Have a great day!";
 
             string connectionString = "endpoint=https://wemlresource.europe.communication.azure.com/;accesskey=8IeJ2KlkFhevlQbAStwBYjbQFnYvTE4JpUjL8V5NzNSTFMVAh9QyJQQJ99ALACULyCpH2AOLAAAAAZCS9Mld";
-            SmsClient smsClient = new SmsClient(connectionString);
-            smsClient.Send(
-               from: new PhoneNumber("0723210410"),
-               to: new PhoneNumber(recipientNumber),
-               message: body
-            );
+            // SmsClient smsClient = new SmsClient(connectionString);
+            // smsClient.Send(
+            //    from: new PhoneNumber("0723210410"),
+            //    to: new PhoneNumber(recipientNumber),
+            //    message: body
+            // );
         }
 
         public void SendToDoctor()
@@ -96,10 +96,13 @@ namespace WEML.Service
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("appweml@gmail.com", "whatevermajorloser"),
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("appweml@gmail.com", "euea vhqx nwtf wuhm"),
+                Host = "smtp.gmail.com",
                 EnableSsl = true,
             };
-
+            Console.WriteLine(this.recipientEmail);
             smtpClient.Send("appweml@gmail.com", this.recipientEmail, this.subject, body);
         }
     }
