@@ -73,7 +73,7 @@ namespace WEML.Repos
             return await _userManager.GetUserAsync(currentUser);
         }
 
-        private IQueryable<Feeling> GetUserFeelingsQuery(Guid userId)
+        private IQueryable<Feeling> GetUserFeelingsQuery(string userId)
         {
             return from feeling in _context.Feelings
                    join feelingUser in _context.Set<FeelingUser>() on feeling.FeelingId equals feelingUser.FeelingId
@@ -113,7 +113,7 @@ namespace WEML.Repos
             if (user == null)
                 throw new InvalidOperationException("No logged-in user found.");
 
-            return await GetUserFeelingsQuery(user.UserId).ToListAsync();
+            return await GetUserFeelingsQuery(user.Id).ToListAsync();
         }
 
         public async Task<IEnumerable<Feeling>> GetFeelingsByDateRangeAsync(DateTime startDate, DateTime endDate, ClaimsPrincipal currentUser)
@@ -123,7 +123,7 @@ namespace WEML.Repos
             if (user == null)
                 throw new InvalidOperationException("No logged-in user found.");
 
-            return await GetUserFeelingsQuery(user.UserId)
+            return await GetUserFeelingsQuery(user.Id)
                 .Where(f => f.DateTime >= startDate && f.DateTime <= endDate)
                 .ToListAsync();
         }
@@ -135,7 +135,7 @@ namespace WEML.Repos
             if (user == null)
                 throw new InvalidOperationException("No logged-in user found.");
 
-            return await GetUserFeelingsQuery(user.UserId)
+            return await GetUserFeelingsQuery(user.Id)
                 .Where(f => f.DateTime.Date == date.Date)
                 .ToListAsync();
         }

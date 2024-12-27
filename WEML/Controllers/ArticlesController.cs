@@ -36,7 +36,7 @@ namespace WEML.Controllers
             return await _userManager.GetUserAsync(currentUser);
         }
 
-        private IQueryable<Symptom> GetUserSymptomsQuery(Guid userId)
+        private IQueryable<Symptom> GetUserSymptomsQuery(string userId)
         {
             return from symptom in _context.Symptoms
                    join symptomUser in _context.Set<SymptomUser>() on symptom.SymptomId equals symptomUser.SymptomId
@@ -53,7 +53,7 @@ namespace WEML.Controllers
                 return NotFound();
 
             //var symptoms = await _context.Symptoms.ToListAsync();
-            var symptoms = await GetUserSymptomsQuery(user.UserId).ToListAsync();
+            var symptoms = await GetUserSymptomsQuery(user.Id).ToListAsync();
 
             return View(await _articlesService.GetArticlesAsync(symptoms));
         }

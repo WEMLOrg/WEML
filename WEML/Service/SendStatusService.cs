@@ -8,6 +8,7 @@ using System.Net.Http;
 // using Azure.Communication;
 // using Azure.Communication.Sms;
 using System.Text.Json;
+using WEML.Repos;
 
 namespace WEML.Service
 {
@@ -23,11 +24,14 @@ namespace WEML.Service
         private String userName;
         private String recipientEmail;
         private String recipientNumber;
+        private readonly SymptomsRepo _symptomsRepo;
+        private readonly DiagnosisEngine _diagnosisEngine;
+
 
         public SendStatusService(User user, List<Symptom> symptoms)
         {
             this.symptoms = symptoms;
-            this.diagnosys = "N.AM IDEE";       // hello?
+            this.diagnosys = " the client something";       
             this.userName = user.FirstName + " " + user.LastName;
 
             this.recipientEmail = user.ContactDoctorEmail;  //ar trebui mail idfk

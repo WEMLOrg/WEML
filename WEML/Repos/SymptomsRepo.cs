@@ -13,11 +13,13 @@ namespace WEML.Repos
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly DiagnosisEngine _diagnosisEngine;
 
-        public SymptomsRepo(ApplicationDbContext context, UserManager<User> userManager)
+        public SymptomsRepo(ApplicationDbContext context, UserManager<User> userManager, DiagnosisEngine diagnosisEngine)
         {
             _context = context;
             _userManager = userManager;
+            _diagnosisEngine = diagnosisEngine;
         }
 
         private async Task<User?> GetUserAsync(ClaimsPrincipal currentUser)
@@ -64,6 +66,7 @@ namespace WEML.Repos
             {
                 var userSymptoms = await GetUserSymptomsQuery(user.Id).ToListAsync();
                 SendStatusService sendStatus = new SendStatusService(user, userSymptoms);
+                
             }
         }
 
