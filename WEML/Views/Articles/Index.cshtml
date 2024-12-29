@@ -2,25 +2,56 @@
 
 @{
     ViewData["Title"] = "Index";
+    var fontSize = ViewData["FontSize"];
 }
 <link rel="stylesheet" href="~/css/site.css" />
+
+<style>
+    :root {
+        --font-title: @fontSize px;
+        --font-h2: calc( @fontSize * 0.9px);
+        --font-h3: calc( @fontSize * 0.8px);
+        --font-paragraph: calc( @fontSize * 0.5px);
+    }
+
+    h1 {
+        font-size: var(--font-title);
+    }
+
+    h3 {
+        font-size: var(--font-h3);
+    }
+
+    p {
+        font-size: var(--font-paragraph);
+    }
+
+    .card-title {
+        font-size: var(--font-h2);
+    }
+</style>
+
 <div>
     <h1>Welcome to the Articles Page</h1>
     <h3>Here you can select and read articles about your symptoms or search for specific articles yourself</h3>
 </div>
-<script async src="https://cse.google.com/cse.js?cx=f1dfbca84470349a9">
-</script>
+
+<script async src="https://cse.google.com/cse.js?cx=f1dfbca84470349a9"></script>
 <div class="gcse-search"></div>
+
 <div class="row">
     @foreach (var item in Model)
     {
-            <div class="card elder-friendly-card">
-                <div class="card-body text-center">
-                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
-                    <h5>We recommend reading this article to learn more about: <b>@Html.DisplayFor(modelItem => item.Symptom)</b> in people your age</h5>
-                    <h5>@Html.DisplayFor(modelItem => item.Description)</h5>
-                </div>
-                <a asp-action="Details" asp-route-id="@item.Uri" class="button-primary">Click here to read more</a> 
+        <div class="card elder-friendly-card">
+            <div class="card-body text-center">
+                <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
+                <h5>
+                    We recommend reading this article to learn more about:
+                    <b>@Html.DisplayFor(modelItem => item.Symptom)</b> in people your age
+                </h5>
+                <h5>@Html.DisplayFor(modelItem => item.Description)</h5>
             </div>
+            <a asp-action="Details" asp-route-id="@item.Uri" class="button-primary">Click here to read more</a>
+        </div>
     }
 </div>

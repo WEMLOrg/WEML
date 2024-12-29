@@ -32,9 +32,24 @@ namespace WEML.Controllers
         //     ViewData["Diagnosis"] = diagnosis;
         //     return View();
         // }
-        
+
+        [HttpPost]
+        public IActionResult SaveFontSize(int fontSize)
+        {
+            // Save the font size in a cookie
+            Response.Cookies.Append("FontSize", fontSize.ToString(), new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(30) 
+            });
+
+            return Ok();
+        }
+
+
         public async Task<IActionResult> Index()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             try
             {
                 Console.WriteLine("in home controller");
@@ -65,28 +80,38 @@ namespace WEML.Controllers
 
         public IActionResult Privacy()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         
         public IActionResult SymptomsForm()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             return View();
         }
 
         public IActionResult FeelingsForm()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             return View();
         }
         
         [HttpPost]
         public async Task<IActionResult> SubmitSymptom(string SymptomName, string SymptomDescription, string Severity)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (string.IsNullOrEmpty(SymptomName) || string.IsNullOrEmpty(SymptomDescription) || string.IsNullOrEmpty(Severity))
             {
                 TempData["Message"] = "All fields are required.";
@@ -110,6 +135,8 @@ namespace WEML.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitFeeling(string FeelingName, string FeelingDescription, string FeelingSeverity)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (string.IsNullOrEmpty(FeelingName) || string.IsNullOrEmpty(FeelingDescription) || string.IsNullOrEmpty(FeelingSeverity))
             {
                 TempData["Message"] = "All fields are required.";
@@ -134,6 +161,8 @@ namespace WEML.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchSymptoms(string term)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (string.IsNullOrWhiteSpace(term))
                 return Json(new List<string>());
             ClaimsPrincipal currentUser = User;

@@ -21,6 +21,8 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> GetAllQuestionsForAChallange(int? id)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (id == null)
             {
                 return NotFound();
@@ -52,12 +54,16 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> GetAllChallanges()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             var challenges = await _context.Challanges.ToListAsync();
             return View(challenges);
         }
 
         public async Task<IActionResult> OpenChallange(int? id)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (id == null)
             {
                 return NotFound();
@@ -81,6 +87,8 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> GetQuestionById(int? id)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (id == null)
             {
                 return NotFound();
@@ -104,6 +112,8 @@ namespace WEML.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitAnswers(Dictionary<int, string> selectedAnswers)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (selectedAnswers == null || !selectedAnswers.Any())
             {
                 ViewBag.ErrorMessage = "Please select an answer for each question.";

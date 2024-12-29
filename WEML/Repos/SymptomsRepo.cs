@@ -117,7 +117,7 @@ namespace WEML.Repos
         public async Task<List<string>> GetMostRecentSymptomsAsync(ClaimsPrincipal currentUser)
         {
             var user = await GetUserAsync(currentUser);
-            Console.WriteLine("in get symptoms cu user " + user.Email);
+           // Console.WriteLine("in get symptoms cu user " + user.Email);
             if (user == null)
                 throw new InvalidOperationException("No logged-in user found.");
 

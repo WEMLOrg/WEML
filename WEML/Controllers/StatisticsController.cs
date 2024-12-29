@@ -20,8 +20,11 @@ namespace WEML.Controllers
             _feelingsRepo = feelingsRepo;
         }
 
+
         public async Task<IActionResult> Index()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30";
+            ViewData["FontSize"] = fontSize;
             ClaimsPrincipal currentUser = User;
             var symptoms = await _symptomsRepo.GetAllSymptomsAsync(currentUser);
             var feelings = await _feelingsRepo.GetAllFeelingsAsync(currentUser);

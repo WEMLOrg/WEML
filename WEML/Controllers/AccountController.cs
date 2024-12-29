@@ -21,6 +21,8 @@ namespace WEML.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }

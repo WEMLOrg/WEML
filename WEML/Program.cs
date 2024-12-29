@@ -5,6 +5,7 @@ using WEML.Data;
 using WEML.Models;
 using WEML.Repos;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,6 +28,11 @@ builder.Services.AddScoped<DiagnosisEngine>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+});
 
 var app = builder.Build();
 

@@ -36,6 +36,8 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> Index(int? year, int? month)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30";
+            ViewData["FontSize"] = fontSize;
             ClaimsPrincipal currentUser = User;
             int currentYear = year ?? DateTime.Now.Year;
             int currentMonth = month ?? DateTime.Now.Month;
@@ -74,6 +76,8 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> DetailsOfDate(DateTime date)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             ClaimsPrincipal currentUser = User;
             if (date == default)
             {

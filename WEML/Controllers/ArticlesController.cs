@@ -46,7 +46,8 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> Index()
         {
-            
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             var user = await GetUserAsync();
 
             if (user == null)
@@ -60,6 +61,8 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> Details(string? id)
         {
+            var fontSize = Request.Cookies["FontSize"] ?? "30"; 
+            ViewData["FontSize"] = fontSize;
             if (id == null)
             {
                 return NotFound();

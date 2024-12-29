@@ -39,6 +39,77 @@
                         </li>
                         
                 </ul>
+                    <div>
+                        <label for="fontSizeSlider">Adjust Font Size:</label>
+                        <input type="range" id="fontSizeSlider" min="20" max="90" value="16" />
+                        <span id="fontSizeValue">16px</span>
+                    </div>
+
+                    <script>
+                        const slider = document.getElementById("fontSizeSlider");
+                        const fontSizeValue = document.getElementById("fontSizeValue");
+
+                        slider.addEventListener("input", () => {
+                            const baseSize = parseInt(slider.value);
+                            fontSizeValue.textContent = `${baseSize}px`;
+
+                            document.documentElement.style.setProperty("--font-title", `${baseSize}px`);
+                            document.documentElement.style.setProperty("--font-h2", `${baseSize * 0.9}px`);
+                            document.documentElement.style.setProperty("--font-h3", `${baseSize * 0.8}px`);
+                            document.documentElement.style.setProperty("--font-h4", `${baseSize * 0.7}px`);
+                            document.documentElement.style.setProperty("--font-paragraph", `${baseSize * 0.5}px`);
+                        });
+
+                        slider.addEventListener("change", () => {
+                            const baseSize = parseInt(slider.value);
+
+                            fetch('/Home/SaveFontSize', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ fontSize: baseSize })
+                            });
+                        });
+
+                        document.addEventListener("DOMContentLoaded", () => {
+                            const initialFontSize = @ViewData["FontSize"];
+                            slider.value = initialFontSize;
+                            fontSizeValue.textContent = `${initialFontSize}px`;
+                            slider.dispatchEvent(new Event("input"));
+                        });
+
+                    </script>
+                    <style>
+                        :root {
+                            --font-title: 16px;
+                            --font-h2: 14.4px;
+                            --font-h3: 12.8px;
+                            --font-h4: 11.2px;
+                            --font-paragraph: 8px;
+                        }
+
+                        h1 {
+                            font-size: var(--font-title);
+                        }
+
+                        h2 {
+                            font-size: var(--font-h2);
+                        }
+
+                        h3 {
+                            font-size: var(--font-h3);
+                        }
+
+                        h4 {
+                            font-size: var(--font-h4);
+                        }
+
+                        p {
+                            font-size: var(--font-paragraph);
+                        }
+                    </style>
+
                 <partial name="_LoginPartial" />
             </div>
         </div>

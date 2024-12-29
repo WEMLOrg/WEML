@@ -1,8 +1,34 @@
 ﻿@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
+    var fontSize = ViewData["FontSize"];
 }
+<link rel="stylesheet" href="~/css/site.css" />
 
+<style>
+    :root {
+        --font-title: @fontSize px;
+        --font-h2: calc( @fontSize * 0.9px);
+        --font-h3: calc( @fontSize * 0.8px);
+        --font-paragraph: calc( @fontSize * 0.5px);
+    }
+
+    h1 {
+        font-size: var(--font-title);
+    }
+
+    h3 {
+        font-size: var(--font-h3);
+    }
+
+    p {
+        font-size: var(--font-paragraph);
+    }
+
+    .card-title {
+        font-size: var(--font-h2);
+    }
+</style>
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 

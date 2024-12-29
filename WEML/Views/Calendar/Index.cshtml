@@ -18,8 +18,35 @@
 
     var nextMonth = currentMonth == 12 ? 1 : currentMonth + 1;
     var nextYear = currentMonth == 12 ? currentYear + 1 : currentYear;
-}
 
+    var fontSize = ViewData["FontSize"];
+}
+<link rel="stylesheet" href="~/css/site.css" />
+
+<style>
+    :root {
+        --font-title: @fontSize px;
+        --font-h2: calc( @fontSize * 0.9px);
+        --font-h3: calc( @fontSize * 0.8px);
+        --font-paragraph: calc( @fontSize * 0.5px);
+    }
+
+    h1 {
+        font-size: var(--font-title);
+    }
+
+    h3 {
+        font-size: var(--font-h3);
+    }
+
+    p {
+        font-size: var(--font-paragraph);
+    }
+
+    .card-title {
+        font-size: var(--font-h2);
+    }
+</style>
 <h1>@ViewData["Title"]</h1>
 
 <div class="calendar-navigation">
