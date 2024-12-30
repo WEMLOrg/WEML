@@ -34,11 +34,11 @@ namespace WEML.Service
             this.diagnosys = " the client something";       
             this.userName = user.FirstName + " " + user.LastName;
 
-            this.recipientEmail = user.ContactDoctorEmail;  //ar trebui mail idfk
+            this.recipientEmail = user.ContactDoctorEmail;  
             this.subject = "Health Update On Pacient " + userName;
             SendToDoctor();
 
-            this.recipientNumber = user.ContactPersonPhone;
+            this.recipientNumber = user.ContactPersonEmail;
             SendToFamily();
 
         }
@@ -73,30 +73,43 @@ namespace WEML.Service
 
         public async void SendToFamily()
         {
-            String body = "Hello! \n We are contacting you on behalf of the WEML app, regarding the physical and mental well-being of our user " + this.userName + " They have reported \n \b";
-            foreach (Symptom s in symptoms)
-            {
-                body += "on " + s.DateTime + ": " + s.SymptomName + " with severity " + s.Severity + "\n";
-            }
-            body = body + "\b\n Based on the new info and our previously added data, our ai system suggested " + this.diagnosys + " as a possible diagnosys. \n You might consider giving them a call. \n \n Have a great day!";
-
-            string connectionString = "endpoint=https://wemlresource.europe.communication.azure.com/;accesskey=8IeJ2KlkFhevlQbAStwBYjbQFnYvTE4JpUjL8V5NzNSTFMVAh9QyJQQJ99ALACULyCpH2AOLAAAAAZCS9Mld";
+            
+            //string connectionString = "endpoint=https://wemlresource.europe.communication.azure.com/;accesskey=8IeJ2KlkFhevlQbAStwBYjbQFnYvTE4JpUjL8V5NzNSTFMVAh9QyJQQJ99ALACULyCpH2AOLAAAAAZCS9Mld";
             // SmsClient smsClient = new SmsClient(connectionString);
             // smsClient.Send(
             //    from: new PhoneNumber("0723210410"),
             //    to: new PhoneNumber(recipientNumber),
             //    message: body
             // );
-        }
-
-        public void SendToDoctor()
-        {
-            String body = "Hello! \n We are contacting you on behalf of the WEML app, regarding the physical and mental well-being of our user " + this.userName + " They have reported \n \b";
+            
+            String body = "Hello! \n We are contacting you on behalf of the WEML app, regarding the physical and mental well-being of our user " + this.userName + " They have reported \n ";
             foreach (Symptom s in symptoms)
             {
                 body += "on " + s.DateTime + ": " + s.SymptomName + " with severity " + s.Severity + "\n";
             }
-            body += "\b\n Based on this new info, our ai system suggested " + this.diagnosys + " as a possible diagnosys. \n We hope this information is usefull if they come for a check up. \n \n Have a great day!";
+            body = body + "\n Based on the new info and our previously added data, our ai system suggested " + this.diagnosys + " as a possible diagnosys. \n You might consider giving them a call. \n \n Have a great day!";
+
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("appweml@gmail.com", "euea vhqx nwtf wuhm"),
+                Host = "smtp.gmail.com",
+                EnableSsl = true,
+            };
+            Console.WriteLine(this.recipientEmail);
+            smtpClient.Send("appweml@gmail.com", this.recipientEmail, this.subject, body);
+        }
+
+        public void SendToDoctor()
+        {
+            String body = "Hello! \n We are contacting you on behalf of the WEML app, regarding the physical and mental well-being of our user " + this.userName + " They have reported \n ";
+            foreach (Symptom s in symptoms)
+            {
+                body += "on " + s.DateTime + ": " + s.SymptomName + " with severity " + s.Severity + "\n";
+            }
+            body += "\n Based on this new info, our ai system suggested " + this.diagnosys + " as a possible diagnosys. \n We hope this information is usefull if they come for a check up. \n \n Have a great day!";
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
