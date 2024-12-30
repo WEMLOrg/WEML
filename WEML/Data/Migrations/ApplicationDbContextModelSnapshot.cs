@@ -175,7 +175,7 @@ namespace WEML.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ContactPersonPhone")
+                    b.Property<string>("ContactPersonEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 

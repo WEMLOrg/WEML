@@ -61,8 +61,8 @@ public class RegisterModel : PageModel
         
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Phone Number of a trusted Contact Person")]
-        public string ContactPersonPhone { get; set; }
+        [Display(Name = "Email of a trusted Contact Person")]
+        public string ContactPersonEmail { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
@@ -103,7 +103,7 @@ public class RegisterModel : PageModel
                 user.FirstName = Input.FirstName; 
                 user.LastName = Input.LastName;
                 user.DateOfBirth = Input.DateOfBirth;
-                user.ContactPersonPhone = Input.ContactPersonPhone;
+                user.ContactPersonEmail = Input.ContactPersonEmail;
                 user.ContactDoctorEmail = Input.ContactDoctorEmail;
                 user.currentDiagnosis = "no diagnosis";
                 user.numberOfPoints = "0";

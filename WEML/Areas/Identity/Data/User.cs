@@ -29,7 +29,7 @@ namespace WEML.Areas.Identity.Data
         public string currentDiagnosis { get; set; }
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
-        public string ContactPersonPhone { get; set; }
+        public string ContactPersonEmail { get; set; }
         [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string ContactDoctorEmail { get; set; }
