@@ -28,16 +28,16 @@
 	}
 
 	$.validator.addMethod( "maxWords", function( value, element, params ) {
-		return this.optional( element ) || stripHtml( value ).match( /\b\w+\b/g ).length <= params;
+		return this.optional( element ) || stripHtml( value ).match( /\w+/g ).length <= params;
 	}, $.validator.format( "Please enter {0} words or less." ) );
 
 	$.validator.addMethod( "minWords", function( value, element, params ) {
-		return this.optional( element ) || stripHtml( value ).match( /\b\w+\b/g ).length >= params;
+		return this.optional( element ) || stripHtml( value ).match( /\w+/g ).length >= params;
 	}, $.validator.format( "Please enter at least {0} words." ) );
 
 	$.validator.addMethod( "rangeWords", function( value, element, params ) {
 		var valueStripped = stripHtml( value ),
-			regex = /\b\w+\b/g;
+			regex = /\w+/g;
 		return this.optional( element ) || valueStripped.match( regex ).length >= params[ 0 ] && valueStripped.match( regex ).length <= params[ 1 ];
 	}, $.validator.format( "Please enter between {0} and {1} words." ) );
 
@@ -863,7 +863,7 @@ $.validator.addMethod( "ipv4", function( value, element ) {
 }, "Please enter a valid IP v4 address." );
 
 $.validator.addMethod( "ipv6", function( value, element ) {
-	return this.optional( element ) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test( value );
+	return this.optional( element ) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2})))\.){3}(((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))))|(([0-9A-Fa-f]{1,4}:){0,5}:((((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2})))\.){3}(((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))))|(::([0-9A-Fa-f]{1,4}:){0,5}((((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2})))\.){3}(((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test( value );
 }, "Please enter a valid IP v6 address." );
 
 $.validator.addMethod( "lessThan", function( value, element, param ) {

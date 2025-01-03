@@ -999,7 +999,7 @@ $.extend( $.validator, {
 					// Respect existing non-error aria-describedby
 					if ( !describedBy ) {
 						describedBy = errorID;
-					} else if ( !describedBy.match( new RegExp( "\\b" + this.escapeCssMeta( errorID ) + "\\b" ) ) ) {
+					} else if ( !describedBy.match( new RegExp( "\" + this.escapeCssMeta( errorID ) + "\" ) ) ) {
 
 						// Add to end of list if not already present
 						describedBy += " " + errorID;
@@ -1512,7 +1512,7 @@ $.extend( $.validator, {
 			var type = $( element ).attr( "type" ),
 				errorMessage = "Step attribute on input type " + type + " is not supported.",
 				supportedTypes = [ "text", "number", "range" ],
-				re = new RegExp( "\\b" + type + "\\b" ),
+				re = new RegExp( "\" + type + "\" ),
 				notSupported = type && !re.test( supportedTypes.join() ),
 				decimalPlaces = function( num ) {
 					var match = ( "" + num ).match( /(?:\.(\d+))?$/ );

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WEML.Data;
 using WEML.Models;
 using WEML.Repos;
+using WEML.Service;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<SymptomsRepo>();
 builder.Services.AddScoped<FeelingsRepo>();
+builder.Services.AddScoped<DOCXService>();
 builder.Services.AddScoped<DiagnosisEngine>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

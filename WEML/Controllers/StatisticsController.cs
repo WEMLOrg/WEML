@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WEML.Models;
 using WEML.Repos;
+using WEML.Service;
 
 namespace WEML.Controllers
 {
@@ -13,14 +15,82 @@ namespace WEML.Controllers
     {
         private readonly SymptomsRepo _symptomsRepo;
         private readonly FeelingsRepo _feelingsRepo;
+        private readonly DOCXService _pdfService;
 
-        public StatisticsController(SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo)
+        public StatisticsController(SymptomsRepo symptomsRepo, FeelingsRepo feelingsRepo, DOCXService pDFService)
         {
             _symptomsRepo = symptomsRepo;
             _feelingsRepo = feelingsRepo;
+            _pdfService = pDFService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GenerateReport()
+        {
 
+            ClaimsPrincipal currentUser = User;
+            var symptoms = await _symptomsRepo.GetAllSymptomsAsync(currentUser);
+            var feelings = await _feelingsRepo.GetAllFeelingsAsync(currentUser);
+
+            var symptomStatistics = symptoms
+                .GroupBy(s => new { Year = s.DateTime.Year, Month = s.DateTime.Month })
+                .Select(group => new MonthlyStatistics
+                {
+                    MonthYear = new DateTime(group.Key.Year, group.Key.Month, 1),
+                    Entries = group
+                        .GroupBy(s => s.SymptomName)
+                        .Select(symptomGroup => new Statistics
+                        {
+                            Name = symptomGroup.Key,
+                            Count = symptomGroup.Count(),
+                            AverageSeverity = symptomGroup.Average(s => ParseSeverity(s.Severity))
+                        }).ToList()
+                })
+                .ToList();
+
+            var feelingStatistics = feelings
+                .GroupBy(f => new { Year = f.DateTime.Year, Month = f.DateTime.Month })
+                .Select(group => new MonthlyStatistics
+                {
+                    MonthYear = new DateTime(group.Key.Year, group.Key.Month, 1),
+                    Entries = group
+                        .GroupBy(f => f.FeelingName)
+                        .Select(feelingGroup => new Statistics
+                        {
+                            Name = feelingGroup.Key,
+                            Count = feelingGroup.Count(),
+                            AverageSeverity = feelingGroup.Average(f => ParseSeverity(f.FeelingSeverity))
+                        }).ToList()
+                })
+                .ToList();
+
+            var mostFrequentSymptom = symptoms
+                .GroupBy(s => s.SymptomName)
+                .OrderByDescending(group => group.Count())
+                .Select(group => new Statistics
+                {
+                    Name = group.Key,
+                    Count = group.Count(),
+                    AverageSeverity = group.Average(s => ParseSeverity(s.Severity))
+                })
+                .FirstOrDefault();
+
+            var mostFrequentFeeling = feelings
+                .GroupBy(f => f.FeelingName)
+                .OrderByDescending(group => group.Count())
+                .Select(group => new Statistics
+                {
+                    Name = group.Key,
+                    Count = group.Count(),
+                    AverageSeverity = group.Average(f => ParseSeverity(f.FeelingSeverity))
+                })
+                .FirstOrDefault();
+            
+
+            return _pdfService.GenerateHealthStatisticsDocx(symptomStatistics, feelingStatistics, mostFrequentSymptom, mostFrequentFeeling);
+        }
+
+        
         public async Task<IActionResult> Index()
         {
             var fontSize = Request.Cookies["FontSize"] ?? "30";
