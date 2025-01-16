@@ -55,7 +55,7 @@
                         <td>@symptom.SymptomName</td>
                         <td>@symptom.Severity</td>
                         <td>@symptom.SymptomDescription</td>
-                        <td>@symptom.DateTime.ToLocalTime</td> 
+                        <td>@symptom.DateTime.ToLocalTime().Date</td> 
                     </tr>
                 }
             </tbody>
@@ -85,7 +85,7 @@
                         <td>@feeling.FeelingName</td>
                         <td>@feeling.FeelingDescription</td>
                         <td>@feeling.FeelingSeverity</td>
-                        <td>@feeling.DateTime.ToLocalTime</td>
+                        <td>@feeling.DateTime.ToLocalTime().Date</td>
                     </tr>
                 }
             </tbody>
