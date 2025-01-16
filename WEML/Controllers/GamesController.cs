@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using WEML.Areas.Identity.Data;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WEML.Controllers
 {
@@ -17,6 +18,12 @@ namespace WEML.Controllers
         {
             _context = context;
             _userManager = userManager;
+        }
+
+        private async Task<User?> GetUserAsync()
+        {
+            ClaimsPrincipal currentUser = User;
+            return await _userManager.GetUserAsync(currentUser);
         }
 
         public async Task<IActionResult> GetAllQuestionsForAChallange(int? id)
@@ -62,6 +69,15 @@ namespace WEML.Controllers
 
         public async Task<IActionResult> OpenChallange(int? id)
         {
+            var user = await GetUserAsync();
+            if (user != null)
+            {
+                ViewBag.UserPoints = user.numberOfPoints; 
+            }
+            else
+            {
+                ViewBag.UserPoints = 0; 
+            }
             var fontSize = Request.Cookies["FontSize"] ?? "30"; 
             ViewData["FontSize"] = fontSize;
             if (id == null)
@@ -103,15 +119,13 @@ namespace WEML.Controllers
 
             return View(questions);
         }
-        private async Task<User?> GetUserAsync()
-        {
-            ClaimsPrincipal currentUser = User;
-            return await _userManager.GetUserAsync(currentUser);
-        }
+       
 
         [HttpPost]
-        public async Task<IActionResult> SubmitAnswers(Dictionary<int, string> selectedAnswers)
+        public async Task<IActionResult> SubmitAnswers(Dictionary<int, string> selectedAnswers, int elapsedTime)
         {
+            Console.WriteLine("Elapsed Time Received: " + elapsedTime);
+
             var fontSize = Request.Cookies["FontSize"] ?? "30"; 
             ViewData["FontSize"] = fontSize;
             if (selectedAnswers == null || !selectedAnswers.Any())
@@ -119,6 +133,11 @@ namespace WEML.Controllers
                 ViewBag.ErrorMessage = "Please select an answer for each question.";
                 return View("OpenChallange"); 
 
+            }
+            if (elapsedTime < 0)
+            {
+                ViewBag.ErrorMessage = "Invalid elapsed time.";
+                return View("OpenChallange");
             }
 
             int totalPoints = 0;
@@ -132,9 +151,36 @@ namespace WEML.Controllers
                 }
             }
             var user = await GetUserAsync();
-            user.numberOfPoints += totalPoints;
-            ViewBag.TotalPoints = totalPoints;
-            
+            if (user != null)
+            {
+                user.numberOfPoints = (totalPoints+ int.Parse(user.numberOfPoints)).ToString();
+
+                try
+                {
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();  
+                    ViewBag.TotalPoints = totalPoints;
+                    ViewBag.ElapsedTime = elapsedTime;
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    var dbUser = await _context.Users
+                        .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+                    if (dbUser != null)
+                    {
+                        dbUser.numberOfPoints = user.numberOfPoints;
+                        dbUser.ConcurrencyStamp = user.ConcurrencyStamp;  
+                        await _context.SaveChangesAsync();  
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "User not found.";
+                return View("OpenChallange");
+            }
+
             return View("Results");
         }
 

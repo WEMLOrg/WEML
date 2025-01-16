@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Games";
     var fontSize = ViewData["FontSize"];
+    var userPoints = ViewBag.UserPoints ?? 0;
 }
 <link rel="stylesheet" href="~/css/site.css" />
 
@@ -33,7 +34,7 @@
 </style>
 <div>
     <h1>Welcome to the Games Page</h1>
-    <h3>Your current score is: </h3>
+    <h3>Your current score is: <strong>@userPoints</strong></h3>
     <h3>Please click on the OPEN button for the game you are interested in playing today</h3>
 </div>
 
