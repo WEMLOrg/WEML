@@ -9,3 +9,4 @@ Here they can:
 - Have a safe space to journal their experiences
 - See all their symptoms over time in a calendar
 
+Check out the powerpoint for more info :)
